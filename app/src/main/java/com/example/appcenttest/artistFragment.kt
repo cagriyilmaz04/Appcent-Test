@@ -8,16 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.appcenttest.Adapter.ArtistAdapter
 import com.example.appcenttest.Adapter.CategoryAdapter
 import com.example.appcenttest.Repository.MainRepository
+import com.example.appcenttest.ViewModel.ArtistViewModel
+import com.example.appcenttest.ViewModel.ArtistViewModelFactory
 import com.example.appcenttest.ViewModel.MainViewModel
 import com.example.appcenttest.ViewModel.MainViewModelFactory
-import com.example.appcenttest.databinding.FragmentHomeBinding
+import com.example.appcenttest.databinding.FragmentArtistBinding
 
-class homeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+
+class artistFragment : Fragment() {
+    private var _binding : FragmentArtistBinding ? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: ArtistViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,27 +31,25 @@ class homeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        _binding = FragmentArtistBinding.inflate(layoutInflater,container,false)
         val retrofitService = RetrofitApi.getInstance()
-        val mainRepository = MainRepository(retrofitService)
-
-        viewModel = ViewModelProvider(this, MainViewModelFactory(mainRepository)).get(MainViewModel::class.java)
-        //viewModel.getAllGenres()
-        //Log.e("TAG",viewModel.genreList.value.toString())
-        viewModel.genreList.observe(requireActivity(),{
-            Log.e("TAG",it.data.toString())
-            val adapter = CategoryAdapter(viewModel.genreList.value!!)
+        var string = "132"
+        val mainRepository = MainRepository(retrofitService,string)
+        viewModel = ViewModelProvider(this, ArtistViewModelFactory(mainRepository)).get(ArtistViewModel::class.java)
+        viewModel.artistList.observe(requireActivity(),{
+            val adapter = ArtistAdapter(viewModel.artistList.value!!)
             val layoutManager = GridLayoutManager(requireContext(),2)
-            binding.recyclerCategory.layoutManager = layoutManager
-            binding.recyclerCategory.adapter = adapter
+            binding.recyclerViewArtist.layoutManager = layoutManager
+            binding.recyclerViewArtist.adapter = adapter
         })
-        viewModel.getAllGenres()
-
+        viewModel.getAllArtist()
         return binding.root
     }
 
     override fun onDestroyView() {
-       _binding = null
+        _binding = null
         super.onDestroyView()
     }
+
+
 }
