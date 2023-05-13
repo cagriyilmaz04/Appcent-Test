@@ -38,10 +38,18 @@
         <argument
             android:name="artist"
             app:argType="com.example.appcenttest.Model.Artist" />
+        <action
+            android:id="@+id/action_artistDetailFragment_to_albumFragment"
+            app:destination="@id/albumFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.appcenttest.favoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.example.appcenttest.AlbumFragment"
+        android:label="fragment_album"
+        tools:layout="@layout/fragment_album" />
 </navigation>

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appcenttest.Model.GenresResponse
-import com.example.appcenttest.R
 import com.example.appcenttest.databinding.RecyclerRowBinding
 import com.example.appcenttest.homeFragmentDirections
 import com.squareup.picasso.Picasso
@@ -25,7 +24,7 @@ class CategoryAdapter(val list:GenresResponse):RecyclerView.Adapter<CategoryAdap
     override fun onBindViewHolder(holder: CategoryVH, position: Int) {
         holder.binding.apply {
             textCategoryName.text = list.data[position].name
-            Picasso.get().load(list.data[position].picture_small).into(imageCategory)
+            Picasso.get().load(list.data[position].picture_medium).into(imageCategory)
             cardViewCategory.setOnClickListener {
             val data = list.data.get(position).id
             val action = homeFragmentDirections.actionHomeFragmentToArtistFragment(data.toString())
