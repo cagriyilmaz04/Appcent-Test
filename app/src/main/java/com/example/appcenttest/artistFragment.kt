@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.appcenttest.Adapter.ArtistAdapter
 import com.example.appcenttest.Adapter.CategoryAdapter
@@ -21,6 +22,7 @@ import com.example.appcenttest.databinding.FragmentArtistBinding
 class artistFragment : Fragment() {
     private var _binding : FragmentArtistBinding ? = null
     private val binding get() = _binding!!
+    private val args: artistFragmentArgs by navArgs()
     lateinit var viewModel: ArtistViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +35,15 @@ class artistFragment : Fragment() {
     ): View? {
         _binding = FragmentArtistBinding.inflate(layoutInflater,container,false)
         val retrofitService = RetrofitApi.getInstance()
-        var string = "132"
+        val string = args.id
         val mainRepository = MainRepository(retrofitService,string)
         viewModel = ViewModelProvider(this, ArtistViewModelFactory(mainRepository)).get(ArtistViewModel::class.java)
-        viewModel.artistList.observe(requireActivity(),{
+        viewModel.artistList.observe(requireActivity()) {
             val adapter = ArtistAdapter(viewModel.artistList.value!!)
-            val layoutManager = GridLayoutManager(requireContext(),2)
+            val layoutManager = GridLayoutManager(requireContext(), 2)
             binding.recyclerViewArtist.layoutManager = layoutManager
             binding.recyclerViewArtist.adapter = adapter
-        })
+        }
         viewModel.getAllArtist()
         return binding.root
     }

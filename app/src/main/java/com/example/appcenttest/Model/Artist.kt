@@ -1,6 +1,9 @@
 package com.example.appcenttest.Model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Artist(
     val id:Int,
     val name:String,
@@ -12,4 +15,4 @@ data class Artist(
     val radio:Boolean,
     val tracklist:String,
     val type:String
-)
+) : Parcelable

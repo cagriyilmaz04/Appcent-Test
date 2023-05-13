@@ -32,15 +32,13 @@ class homeFragment : Fragment() {
         val mainRepository = MainRepository(retrofitService)
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(mainRepository)).get(MainViewModel::class.java)
-        //viewModel.getAllGenres()
-        //Log.e("TAG",viewModel.genreList.value.toString())
-        viewModel.genreList.observe(requireActivity(),{
-            Log.e("TAG",it.data.toString())
+        viewModel.genreList.observe(requireActivity()) {
+            Log.e("TAG", it.data.toString())
             val adapter = CategoryAdapter(viewModel.genreList.value!!)
-            val layoutManager = GridLayoutManager(requireContext(),2)
+            val layoutManager = GridLayoutManager(requireContext(), 2)
             binding.recyclerCategory.layoutManager = layoutManager
             binding.recyclerCategory.adapter = adapter
-        })
+        }
         viewModel.getAllGenres()
 
         return binding.root
