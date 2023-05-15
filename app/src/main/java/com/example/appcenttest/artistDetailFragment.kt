@@ -1,5 +1,6 @@
 package com.example.appcenttest
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,6 +26,11 @@ class artistDetailFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var viewModel: AlbumViewModel
     val args : artistDetailFragmentArgs by navArgs()
+    lateinit var layoutManager:LinearLayoutManager
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        layoutManager = LinearLayoutManager(requireContext())
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -36,11 +42,11 @@ class artistDetailFragment : Fragment() {
         _binding = FragmentArtistDetailBinding.inflate(layoutInflater,container,false)
         val retrofitService = RetrofitApi.getInstance()
         val mainRepository = MainRepository(retrofitService,args.artist.id.toString())
-        Picasso.get().load(args.artist.picture_medium).into(binding.imageViewArtistDetail)
+        Picasso.get().load(args.artist.pictureMedium).into(binding.imageViewArtistDetail)
         viewModel = ViewModelProvider(this, AlbumViewModelFactory(mainRepository)).get(AlbumViewModel::class.java)
         viewModel.albumDetail.observe(requireActivity()) {
             val adapter = AlbumDetailAdapter(viewModel.albumDetail.value!!)
-            val layoutManager = LinearLayoutManager(requireContext())
+
             layoutManager.orientation = LinearLayoutManager.VERTICAL
             binding.recyclerViewArtistDetail.layoutManager = layoutManager
             binding.recyclerViewArtistDetail.adapter = adapter
@@ -51,7 +57,6 @@ class artistDetailFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding = null
         super.onDestroyView()
     }
 

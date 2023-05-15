@@ -51,5 +51,9 @@
         android:id="@+id/albumFragment"
         android:name="com.example.appcenttest.AlbumFragment"
         android:label="fragment_album"
-        tools:layout="@layout/fragment_album" />
+        tools:layout="@layout/fragment_album" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -24,7 +24,7 @@ class ArtistAdapter (val list: ArtistsResponse): RecyclerView.Adapter<ArtistAdap
     override fun onBindViewHolder(holder: ArtistVH, position: Int) {
         holder.binding.apply {
             textArtistName.text = list.data[position].name
-            Picasso.get().load(list.data[position].picture_medium).into(imageCategory)
+            Picasso.get().load(list.data[position].pictureMedium).into(imageCategory)
             cardViewArtist.setOnClickListener {
                 val artist = list.data[position]
                 val action = artistFragmentDirections.actionArtistFragmentToArtistDetailFragment(artist)

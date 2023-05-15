@@ -1,18 +1,22 @@
 package com.example.appcenttest.Model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Artist(
-    val id:Int,
-    val name:String,
-    val picture:String,
-    val picture_small:String,
-    val picture_medium:String,
-    val picture_big:String,
-    val picture_xl:String,
-    val radio:Boolean,
-    val tracklist:String,
-    val type:String
+    val id: Int,
+    val name: String,
+    val picture: String,
+    @SerializedName("picture_small")
+    val pictureSmall: String,
+    @SerializedName("picture_medium")
+    val pictureMedium: String,
+    @SerializedName("picture_big")
+    val pictureBig: String,
+    @SerializedName("picture_xl")
+    val pictureXl: String,
+    val tracklist: String,
+    val type: String
 ) : Parcelable

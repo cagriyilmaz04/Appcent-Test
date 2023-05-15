@@ -1,5 +1,6 @@
 package com.example.appcenttest
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,6 +25,11 @@ class artistFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: artistFragmentArgs by navArgs()
     lateinit var viewModel: ArtistViewModel
+    lateinit var layoutManager : GridLayoutManager
+    override fun onAttach(context: Context) {
+        layoutManager = GridLayoutManager(context,2)
+        super.onAttach(context)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,22 +40,24 @@ class artistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentArtistBinding.inflate(layoutInflater,container,false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val retrofitService = RetrofitApi.getInstance()
         val string = args.id
         val mainRepository = MainRepository(retrofitService,string)
         viewModel = ViewModelProvider(this, ArtistViewModelFactory(mainRepository)).get(ArtistViewModel::class.java)
         viewModel.artistList.observe(requireActivity()) {
             val adapter = ArtistAdapter(viewModel.artistList.value!!)
-            val layoutManager = GridLayoutManager(requireContext(), 2)
-            binding.recyclerViewArtist.layoutManager = layoutManager
             binding.recyclerViewArtist.adapter = adapter
+            binding.recyclerViewArtist.layoutManager = layoutManager
         }
         viewModel.getAllArtist()
-        return binding.root
+        super.onViewCreated(view, savedInstanceState)
     }
-
     override fun onDestroyView() {
-        _binding = null
         super.onDestroyView()
     }
 

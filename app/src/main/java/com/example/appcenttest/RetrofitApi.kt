@@ -1,5 +1,7 @@
 package com.example.appcenttest
 
+import AlbumDetail
+import com.example.appcenttest.Model.AlbumDetailResponse
 import com.example.appcenttest.Model.AlbumResponse
 import com.example.appcenttest.Model.ArtistsResponse
 import com.example.appcenttest.Model.GenresResponse
@@ -18,6 +20,9 @@ interface RetrofitApi {
 
     @GET("artist/{genre_id}/albums")
     suspend fun getAlbumDetail(@Path("genre_id") genre_id:String): Response<AlbumResponse>
+
+    @GET("album/{id}")
+    suspend fun getAlbum(@Path("id") album_id:String):Response<AlbumDetail>
 
     companion object {
         val baseUrl = "https://api.deezer.com/"

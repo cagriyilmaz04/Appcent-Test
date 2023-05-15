@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.appcenttest.Adapter.CategoryAdapter
 import com.example.appcenttest.Repository.MainRepository
 import com.example.appcenttest.ViewModel.MainViewModel
@@ -28,6 +30,7 @@ class homeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        binding.toolbar.title = "Home"
         val retrofitService = RetrofitApi.getInstance()
         val mainRepository = MainRepository(retrofitService)
 
@@ -37,6 +40,8 @@ class homeFragment : Fragment() {
             val adapter = CategoryAdapter(viewModel.genreList.value!!)
             val layoutManager = GridLayoutManager(requireContext(), 2)
             binding.recyclerCategory.layoutManager = layoutManager
+
+
             binding.recyclerCategory.adapter = adapter
         }
         viewModel.getAllGenres()

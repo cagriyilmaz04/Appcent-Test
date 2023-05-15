@@ -2,8 +2,13 @@ package com.example.appcenttest.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appcenttest.AlbumFragmentArgs
 import com.example.appcenttest.Model.AlbumResponse
+import com.example.appcenttest.R
+import com.example.appcenttest.artistDetailFragmentDirections
+import com.example.appcenttest.artistFragmentDirections
 import com.example.appcenttest.databinding.RecyclerRowArtistDetailBinding
 import com.squareup.picasso.Picasso
 
@@ -27,9 +32,11 @@ class AlbumDetailAdapter (val list: AlbumResponse): RecyclerView.Adapter<AlbumDe
             cardViewAlbumDetail.setOnClickListener {
                 //val artist = list.data[position]
                 //val action = artistFragmentDirections.actionArtistFragmentToArtistDetailFragment(artist)
-                //Navigation.findNavController(it).navigate(action)
+               val data = artistDetailFragmentDirections.actionArtistDetailFragmentToAlbumFragment(list.data.get(position).id.toString())
+                Navigation.findNavController(it).navigate(data)
 
             }
+
 
         }
     }

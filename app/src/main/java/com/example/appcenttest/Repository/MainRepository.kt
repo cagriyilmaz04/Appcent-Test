@@ -7,5 +7,6 @@ class MainRepository constructor(private val retrofitService:RetrofitApi, privat
     suspend fun getAllGenres() = retrofitService.getGenre()
     suspend fun getAllArtists() = retrofitService.getArtist(user_id!!)
     suspend fun getAlbumDetails() = retrofitService.getAlbumDetail(user_id!!)
+    suspend fun getAlbum() = retrofitService.getAlbum(user_id!!)
 
 }
