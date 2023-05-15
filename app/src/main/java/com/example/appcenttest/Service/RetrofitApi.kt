@@ -1,7 +1,6 @@
-package com.example.appcenttest
+package com.example.appcenttest.Service
 
 import AlbumDetail
-import com.example.appcenttest.Model.AlbumDetailResponse
 import com.example.appcenttest.Model.AlbumResponse
 import com.example.appcenttest.Model.ArtistsResponse
 import com.example.appcenttest.Model.GenresResponse
@@ -27,8 +26,8 @@ interface RetrofitApi {
     companion object {
         val baseUrl = "https://api.deezer.com/"
         var retrofitService: RetrofitApi? = null
-        fun getInstance(): RetrofitApi{
-            if(retrofitService==null){
+        fun getInstance(): RetrofitApi {
+            if(retrofitService ==null){
                 val retrofit = Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())

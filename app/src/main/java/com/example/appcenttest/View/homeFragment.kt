@@ -1,4 +1,4 @@
-package com.example.appcenttest
+package com.example.appcenttest.View
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.appcenttest.Adapter.CategoryAdapter
 import com.example.appcenttest.Repository.MainRepository
+import com.example.appcenttest.Service.RetrofitApi
 import com.example.appcenttest.ViewModel.MainViewModel
 import com.example.appcenttest.ViewModel.MainViewModelFactory
 import com.example.appcenttest.databinding.FragmentHomeBinding
@@ -36,7 +35,6 @@ class homeFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(mainRepository)).get(MainViewModel::class.java)
         viewModel.genreList.observe(requireActivity()) {
-            Log.e("TAG", it.data.toString())
             val adapter = CategoryAdapter(viewModel.genreList.value!!)
             val layoutManager = GridLayoutManager(requireContext(), 2)
             binding.recyclerCategory.layoutManager = layoutManager
@@ -52,5 +50,11 @@ class homeFragment : Fragment() {
     override fun onDestroyView() {
        _binding = null
         super.onDestroyView()
+    }
+    companion object{
+        var categoryName = ""
+        var artistName = ""
+        var albumName = ""
+
     }
 }

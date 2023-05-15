@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Tracks (
     @PrimaryKey(autoGenerate = true)
     val room_id:Int,
-    val id: Int?,
+    val id: Long?,
     val readable: Boolean?,
     val title: String?,
     val title_short: String?,

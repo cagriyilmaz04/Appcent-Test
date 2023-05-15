@@ -1,7 +1,7 @@
 package com.example.appcenttest.Model
 
 data class Contributors(
-    val id:String,
+    val id:Long,
     val name:String,
     val link:String,
     val share:String,

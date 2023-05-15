@@ -14,10 +14,15 @@ import android.util.Log
 import android.widget.Toast
 import com.example.appcenttest.R
 import com.example.appcenttest.ViewModel.TracksViewModel
+import kotlin.reflect.KFunction1
 
-class AlbumAdapter (val list: AlbumDetail,val viewModel:TracksViewModel,val context:Context): RecyclerView.Adapter<AlbumAdapter.AlbumDetailVH>() {
+class AlbumAdapter (var list: AlbumDetail?,val context:Context,private val listener:Listener): RecyclerView.Adapter<AlbumAdapter.AlbumDetailVH>() {
     private var mediaPlayer: MediaPlayer? = null
-    class AlbumDetailVH(val binding: RecyclerAlbumBinding): RecyclerView.ViewHolder(binding.root)
+
+
+    class AlbumDetailVH(val binding: RecyclerAlbumBinding): RecyclerView.ViewHolder(binding.root){
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumDetailVH {
         val binding = RecyclerAlbumBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -25,21 +30,23 @@ class AlbumAdapter (val list: AlbumDetail,val viewModel:TracksViewModel,val cont
     }
 
     override fun getItemCount(): Int {
-        return list.tracks.data.size
+        return list!!.tracks.data.size
     }
 
     override fun onBindViewHolder(holder: AlbumDetailVH, position: Int) {
         holder.binding.apply {
-            textViewSongName.text = list.tracks.data.get(position).title
-            textViewDuration.text = convertSecondsToMinutesAndSeconds(list.tracks.data.get(position).duration!!.toInt())
-            Picasso.get().load(list.tracks.data.get(position).album!!.cover_big).into(imageSong)
+
+            textViewSongName.text = list!!.tracks.data.get(position).title
+            textViewDuration.text = convertSecondsToMinutesAndSeconds(list!!.tracks.data.get(position).duration!!.toInt())
+            Picasso.get().load(list!!.tracks.data.get(position).album!!.cover_big).into(imageSong)
             imageViewLike.setOnClickListener {
-                Toast.makeText(context,context.getString(R.string.save),Toast.LENGTH_LONG).show()
+
                 imageViewLike.setImageResource(R.drawable.baseline_favorite_24)
-                viewModel.addTrack(list.tracks.data.get(position))
+                listener.onItemClick(position)
             }
             cardViewAlbum.setOnClickListener {
-                playPreview(list.tracks.data.get(position).preview!!)
+                playPreview(list!!.tracks.data.get(position).preview!!)
+
             }
         }
     }
@@ -72,6 +79,8 @@ class AlbumAdapter (val list: AlbumDetail,val viewModel:TracksViewModel,val cont
             }
         }
     }
-
+    interface Listener {
+        fun onItemClick(value:Int)
+    }
 
 }

@@ -4,15 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".artistFragment">
+    tools:context=".View.artistFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewArtist"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="4dp"
         android:paddingBottom="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarArtist" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarArtist"
+        android:layout_width="393dp"
+        android:layout_height="35dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

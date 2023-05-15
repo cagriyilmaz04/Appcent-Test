@@ -1,4 +1,4 @@
-package com.example.appcenttest
+package com.example.appcenttest.Service
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -18,4 +18,7 @@ interface TrackDao {
 
     @Delete
     fun deleteTrack(track: Tracks)
+
+    @Query("DELETE FROM tracks_table")
+    fun deleteAllTracks()
 }

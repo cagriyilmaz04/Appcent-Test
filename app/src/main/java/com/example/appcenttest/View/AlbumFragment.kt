@@ -1,45 +1,43 @@
-package com.example.appcenttest
+package com.example.appcenttest.View
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appcenttest.Adapter.AlbumAdapter
-import com.example.appcenttest.Adapter.AlbumDetailAdapter
 import com.example.appcenttest.Repository.MainRepository
+import com.example.appcenttest.Service.RetrofitApi
 import com.example.appcenttest.ViewModel.AlbumDetailViewModel
 import com.example.appcenttest.ViewModel.AlbumDetailViewModelFactory
-import com.example.appcenttest.ViewModel.AlbumViewModel
-import com.example.appcenttest.ViewModel.AlbumViewModelFactory
 import com.example.appcenttest.ViewModel.TracksViewModel
-import com.example.appcenttest.ViewModel.TracksViewModelFactory
 import com.example.appcenttest.databinding.FragmentAlbumBinding
-import com.squareup.picasso.Picasso
 
 
-class AlbumFragment : Fragment() {
+class AlbumFragment : Fragment(),AlbumAdapter.Listener {
     private var _binding: FragmentAlbumBinding?=null
     lateinit var layoutManager : LinearLayoutManager
     private val binding get() = _binding!!
     lateinit var viewModel: AlbumDetailViewModel
     lateinit var tracksViewModel:TracksViewModel
     val args : AlbumFragmentArgs by navArgs()
+    lateinit var adapter:AlbumAdapter
+
     override fun onAttach(context: Context) {
         layoutManager = LinearLayoutManager(context)
+        adapter = AlbumAdapter(null,context,this)
         super.onAttach(context)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,14 +49,31 @@ class AlbumFragment : Fragment() {
         viewModel = ViewModelProvider(this, AlbumDetailViewModelFactory(mainRepository)).get(AlbumDetailViewModel::class.java)
         tracksViewModel = ViewModelProvider(this).get(TracksViewModel::class.java)
         viewModel.albumDetail.observe(requireActivity()) {
-
+            adapter.list = viewModel.albumDetail.value
             binding.recyclerViewAlbums.layoutManager = layoutManager
-            val adapter = AlbumAdapter(viewModel.albumDetail.value!!,tracksViewModel,requireContext())
             binding.recyclerViewAlbums.adapter = adapter
+            binding.recyclerViewAlbums.adapter!!.notifyDataSetChanged()
         }
         viewModel.getAlbumDetail()
 
         return binding.root
+    }
+
+    override fun onItemClick(value: Int) {
+        var flag = false
+        viewModel.albumDetail.observe(requireActivity()) {
+            tracksViewModel.readAllData.observe(this){
+                for(i in tracksViewModel.readAllData.value!!){
+                    if(i.link.equals(viewModel.albumDetail.value!!.tracks.data.get(value).link)){
+                            flag = true
+                    }
+                }
+                if(!flag){
+                    tracksViewModel.addTrack(viewModel.albumDetail.value!!.tracks.data.get(value))
+                }
+            }
+
+        }
     }
 
 

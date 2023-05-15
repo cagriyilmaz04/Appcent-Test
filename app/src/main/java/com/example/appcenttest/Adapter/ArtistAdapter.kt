@@ -1,11 +1,13 @@
 package com.example.appcenttest.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appcenttest.Model.ArtistsResponse
-import com.example.appcenttest.artistFragmentDirections
+import com.example.appcenttest.View.artistFragmentDirections
+import com.example.appcenttest.View.homeFragment
 import com.example.appcenttest.databinding.RecyclerArtistBinding
 import com.squareup.picasso.Picasso
 
@@ -29,6 +31,7 @@ class ArtistAdapter (val list: ArtistsResponse): RecyclerView.Adapter<ArtistAdap
                 val artist = list.data[position]
                 val action = artistFragmentDirections.actionArtistFragmentToArtistDetailFragment(artist)
                 Navigation.findNavController(it).navigate(action)
+                homeFragment.artistName = list.data.get(position).name
 
             }
 

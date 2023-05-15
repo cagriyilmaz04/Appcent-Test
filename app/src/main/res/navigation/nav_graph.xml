@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.appcenttest.homeFragment"
+        android:name="com.example.appcenttest.View.homeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/artistFragment"
-        android:name="com.example.appcenttest.artistFragment"
+        android:name="com.example.appcenttest.View.artistFragment"
         android:label="fragment_artist"
         tools:layout="@layout/fragment_artist" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/artistDetailFragment"
-        android:name="com.example.appcenttest.artistDetailFragment"
+        android:name="com.example.appcenttest.View.artistDetailFragment"
         android:label="fragment_artist_detail"
         tools:layout="@layout/fragment_artist_detail" >
         <argument
@@ -44,12 +44,12 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.appcenttest.favoriteFragment"
+        android:name="com.example.appcenttest.View.favoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/albumFragment"
-        android:name="com.example.appcenttest.AlbumFragment"
+        android:name="com.example.appcenttest.View.AlbumFragment"
         android:label="fragment_album"
         tools:layout="@layout/fragment_album" >
         <argument

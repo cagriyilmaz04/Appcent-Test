@@ -6,7 +6,7 @@ import com.example.appcenttest.Model.TracksList
 import com.google.gson.annotations.SerializedName
 
 data class AlbumDetail(
-    val id: Int,
+    val id: Long,
     val title: String,
     val upc: String,
     val link: String,

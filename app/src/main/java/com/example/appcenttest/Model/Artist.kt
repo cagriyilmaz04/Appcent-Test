@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Artist(
-    val id: Int,
+    val id: Long,
     val name: String,
     val picture: String,
     @SerializedName("picture_small")
